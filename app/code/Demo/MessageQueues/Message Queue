@@ -1,0 +1,13 @@
+communication.xml
+
+ - topic  mapped to -> consumer handler class
+ 
+ Execution case 1 :
+ 
+ Step 1:  Publish the message queue using observers or plugins or through some other way.
+ 
+ Entry is done in queue_message table having payload in json encoded form.
+ 
+ Step 2: 
+ 
+ 

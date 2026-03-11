@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework-message-queue:etc/communication.xsd">
+    <!--
+      Define message queue topics here.
+
+      Example:
+      <topic name="demo.messagequeues.example" request="string"/>
+    -->
+    <topic name="notifycustomer.massmail" request="string">
+        <handler name="notifycustomer.massmail"
+                 type="Demo\MessageQueues\Model\Consumer"
+                 method="process"/>
+    </topic>
+</config>

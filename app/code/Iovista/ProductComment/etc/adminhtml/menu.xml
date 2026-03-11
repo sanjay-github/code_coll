@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Iovista_ProductComment::product_comments" title="Product Comments" translate="title" module="Iovista_ProductComment" sortOrder="60" parent="Magento_Backend::stores_attributes" action="productComment/comments/" resource="Iovista_ProductComment::product_comments"/>
+    </menu>
+</config>

@@ -1,0 +1,73 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Iovista\ProductComment\Block\Form $block */
+if (!$block->getButtonLockManager()) {
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $block->setButtonLockManager(
+        $objectManager->get(\Magento\Framework\View\Element\ButtonLockManager::class)
+    );
+}
+/** @var $escaper \Magento\Framework\Escaper */
+//phpcs:disable Generic.Files.LineLength
+?>
+<div class="block review-add">
+    <div class="block-title"><strong><?= $escaper->escapeHtml(__('Write Your Own Comment')) ?></strong></div>
+<div class="block-content">
+<?php if ($block->getAllowWriteReviewFlag()):?>
+<form action="<?= $escaper->escapeUrl($block->getAction()) ?>" class="product-comment-form" method="post" id="product-comment-form" data-role="product-product-comment-form" data-bind="scope: 'product-comment-form'">
+    <?= $block->getBlockHtml('formkey') ?>
+    <fieldset class="fieldset review-fieldset" data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>">
+        <legend class="legend review-legend"><span><?= $escaper->escapeHtml(__("You're Commenting:")) ?></span><strong><?= $escaper->escapeHtml($block->getProductInfo()->getName()) ?></strong></legend><br />
+        <div class="field review-field-nickname required">
+            <label for="nickname_field" class="label"><span><?= $escaper->escapeHtml(__('Name')) ?></span></label>
+            <div class="control">
+                <input type="text" name="nickname" id="name_field" class="input-text" data-validate="{required:true}" data-bind="value: nickname()" />
+            </div>
+        </div>
+        <div class="field review-field-summary required">
+            <label for="email_field" class="label"><span><?= $escaper->escapeHtml(__('Email')) ?></span></label>
+            <div class="control">
+                <input type="text" name="email" id="email_field" class="input-text" data-validate="{required:true}" data-bind="value: review().email" />
+            </div>
+        </div>
+        <div class="field review-field-text required">
+            <label for="comment_field" class="label"><span><?= $escaper->escapeHtml(__('Comment')) ?></span></label>
+            <div class="control">
+                <textarea name="comment" id="comment_field" cols="5" rows="3" data-validate="{required:true}" data-bind="value: review().comment"></textarea>
+            </div>
+        </div>
+    </fieldset>
+    <div class="actions-toolbar review-form-actions">
+        <div class="primary actions-primary">
+            <button type="submit" class="action submit primary"
+                <?php if ($block->getButtonLockManager()->isDisabled('review_form_submit')): ?>
+                    disabled="disabled"
+                <?php endif; ?>>
+                <span><?= $escaper->escapeHtml(__('Submit Comment')) ?></span>
+            </button>
+        </div>
+    </div>
+</form>
+<script type="text/x-magento-init">
+{
+    "[data-role=product-review-form]": {
+        "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
+    },
+    "#product-comment-form": {
+        "Magento_Review/js/submit-review": {}
+    }
+}
+</script>
+<?php else: ?>
+    <div class="message info notlogged" id="review-form">
+        <div>
+            <?= $escaper->escapeHtml(__('Only registered users can write reviews. Please <a href="%1">Sign in</a> or <a href="%2">create an account</a>', $block->getLoginLink(), $block->getRegisterUrl()), ['a']) ?>
+        </div>
+    </div>
+<?php endif ?>
+</div>
+</div>

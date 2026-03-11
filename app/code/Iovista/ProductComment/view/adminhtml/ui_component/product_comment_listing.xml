@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">product_comment_listing.product_comment_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>product_comment_columns</spinner>
+        <deps>
+            <dep>product_comment_listing.product_comment_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="product_comment_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">comment_id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Iovista_ProductComment::product_comments</aclResource>
+        <dataProvider class="Iovista\ProductComment\Ui\Component\DataProvider" name="product_comment_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>comment_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <exportButton name="export_button"/>
+        <filters name="listing_filters">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="params" xsi:type="array">
+                        <item name="filters_modifier" xsi:type="array"/>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <statefull>
+                    <property name="applied" xsi:type="boolean">false</property>
+                </statefull>
+            </settings>
+        </filters>
+        <massaction name="listing_massaction">
+            <action name="approve">
+                <settings>
+                    <url path="productComment/comments/massApprove"/>
+                    <type>approve</type>
+                    <label translate="true">Approve</label>
+                </settings>
+            </action>
+            <action name="disapprove">
+                <settings>
+                    <url path="productComment/comments/massDisapprove"/>
+                    <type>disapprove</type>
+                    <label translate="true">Disapprove</label>
+                </settings>
+            </action>
+            <action name="delete">
+                <settings>
+                    <confirm>
+                        <message translate="true">Are you sure you want to delete selected items?</message>
+                        <title translate="true">Delete items</title>
+                    </confirm>
+                    <url path="productComment/comments/massDelete"/>
+                    <type>delete</type>
+                    <label translate="true">Delete</label>
+                </settings>
+            </action>
+        </massaction>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="product_comment_columns" class="Magento\Ui\Component\Listing\Columns">
+        <selectionsColumn name="ids">
+            <settings>
+                <indexField>comment_id</indexField>
+                <resizeEnabled>false</resizeEnabled>
+                <resizeDefaultWidth>55</resizeDefaultWidth>
+            </settings>
+        </selectionsColumn>
+        <column name="comment_id">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Created</label>
+            </settings>
+        </column>
+        <column name="status" sortOrder="20">
+            <settings>
+                <filter>select</filter>
+                <options class="Magento\Review\Ui\Component\Listing\Columns\Status"/>
+                <dataType>select</dataType>
+                <label translate="true">Status</label>
+            </settings>
+        </column>
+        <column name="nickname" sortOrder="30">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="truncate" xsi:type="number">50</item>
+                    <item name="nl2br" xsi:type="boolean">true</item>
+                    <item name="escape" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Name</label>
+            </settings>
+        </column>
+        <column name="email" sortOrder="40">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="truncate" xsi:type="number">50</item>
+                    <item name="nl2br" xsi:type="boolean">true</item>
+                    <item name="escape" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Email</label>
+            </settings>
+        </column>
+        <column name="comment" sortOrder="50">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="truncate" xsi:type="number">50</item>
+                    <item name="nl2br" xsi:type="boolean">true</item>
+                    <item name="escape" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Comment</label>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Iovista\ProductComment\Ui\Component\Listing\Column\CommentActions">
+            <settings>
+                <indexField>comment_id</indexField>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>
