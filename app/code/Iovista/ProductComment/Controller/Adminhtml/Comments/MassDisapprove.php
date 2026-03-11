@@ -22,7 +22,7 @@ class MassDisapprove extends \Magento\Backend\App\Action implements HttpPostActi
      *
      * @see _isAllowed()
      */
-    const ADMIN_RESOURCE = 'Iovista_ProductComment::save';
+    public const ADMIN_RESOURCE = 'Iovista_ProductComment::product_comments';
 
     /**
      * @var Filter
@@ -57,7 +57,7 @@ class MassDisapprove extends \Magento\Backend\App\Action implements HttpPostActi
         $collection = $this->filter->getCollection($this->collectionFactory->create());
 
         foreach ($collection as $item) {
-            $item->setStauts(ProductComment::STATUS_NOT_APPROVED);
+            $item->setStatus(ProductComment::STATUS_NOT_APPROVED);
             $item->save();
         }
 
