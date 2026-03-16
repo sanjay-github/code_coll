@@ -3,9 +3,8 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Iovista\ProductComment\Ui\Component\Listing\Column;
+namespace Iovista\ProductComment\Ui\Component\Listing\Columns;
 
-use Magento\Cms\Block\Adminhtml\Page\Grid\Renderer\Action\UrlBuilder;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Escaper;
 use Magento\Framework\UrlInterface;
@@ -19,28 +18,12 @@ use Magento\Ui\Component\Listing\Columns\Column;
 class CommentActions extends Column
 {
     /** Url path */
-    const CMS_URL_PATH_EDIT = 'cms/page/edit';
-    const CMS_URL_PATH_DELETE = 'productComment/comments/delete';
-
-    /**
-     * @var \Magento\Cms\Block\Adminhtml\Page\Grid\Renderer\Action\UrlBuilder
-     */
-    protected $actionUrlBuilder;
-
-    /**
-     * @var \Magento\Cms\ViewModel\Page\Grid\UrlBuilder
-     */
-    private $scopeUrlBuilder;
+    const COMMENT_DELETE_URL_PATH = 'productComment/comments/delete';
 
     /**
      * @var \Magento\Framework\UrlInterface
      */
     protected $urlBuilder;
-
-    /**
-     * @var string
-     */
-    private $editUrl;
 
     /**
      * @var Escaper
@@ -50,29 +33,19 @@ class CommentActions extends Column
     /**
      * @param ContextInterface $context
      * @param UiComponentFactory $uiComponentFactory
-     * @param UrlBuilder $actionUrlBuilder
      * @param UrlInterface $urlBuilder
      * @param array $components
      * @param array $data
-     * @param string $editUrl
-     * @param \Magento\Cms\ViewModel\Page\Grid\UrlBuilder|null $scopeUrlBuilder
      */
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
-        UrlBuilder $actionUrlBuilder,
         UrlInterface $urlBuilder,
         array $components = [],
-        array $data = [],
-        $editUrl = self::CMS_URL_PATH_EDIT,
-        ?\Magento\Cms\ViewModel\Page\Grid\UrlBuilder $scopeUrlBuilder = null
+        array $data = []
     ) {
         $this->urlBuilder = $urlBuilder;
-        $this->actionUrlBuilder = $actionUrlBuilder;
-        $this->editUrl = $editUrl;
         parent::__construct($context, $uiComponentFactory, $components, $data);
-        $this->scopeUrlBuilder = $scopeUrlBuilder ?: ObjectManager::getInstance()
-            ->get(\Magento\Cms\ViewModel\Page\Grid\UrlBuilder::class);
     }
 
     /**
@@ -84,30 +57,15 @@ class CommentActions extends Column
             foreach ($dataSource['data']['items'] as & $item) {
                 $name = $this->getData('name');
                 if (isset($item['comment_id'])) {
-                    $item[$name]['edit'] = [
-                        'href' => $this->urlBuilder->getUrl($this->editUrl, ['comment_id' => $item['comment_id']]),
-                        'label' => __('Edit'),
-                    ];
                     $comment = $this->getEscaper()->escapeHtml($item['comment_id']);
                     $item[$name]['delete'] = [
-                        'href' => $this->urlBuilder->getUrl(self::CMS_URL_PATH_DELETE, ['comment_id' => $item['comment_id']]),
+                        'href' => $this->urlBuilder->getUrl(self::COMMENT_DELETE_URL_PATH, ['comment_id' => $item['comment_id']]),
                         'label' => __('Delete'),
                         'confirm' => [
                             'title' => __('Delete %1', $comment),
-                            'message' => __('Are you sure you want to delete a %1 record?', $comment),
+                            'message' => __('Are you sure you want to delete a record with Id %1?', $comment),
                         ],
                         'post' => true,
-                    ];
-                }
-                if (isset($item['identifier'])) {
-                    $item[$name]['preview'] = [
-                        'href' => $this->scopeUrlBuilder->getUrl(
-                            $item['identifier'],
-                            isset($item['_first_store_id']) ? $item['_first_store_id'] : null,
-                            isset($item['store_code']) ? $item['store_code'] : null
-                        ),
-                        'label' => __('View'),
-                        'target' => '_blank'
                     ];
                 }
             }

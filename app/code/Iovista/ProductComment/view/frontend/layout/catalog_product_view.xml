@@ -23,11 +23,17 @@
                     <argument name="title" translate="true" xsi:type="string">Comments</argument>
                     <argument name="section_id" xsi:type="string">productComments</argument>
                 </arguments>
-<!--                <block class="Magento\Review\Block\Product\View\ListView" name="product.info.product_additional_data.wrapper" template="Magento_Review::product/view/list.phtml" ifconfig="catalog/review/active">-->
-<!--                    <arguments>-->
-<!--                        <argument name="hide_title" xsi:type="boolean">true</argument>-->
-<!--                    </arguments>-->
-<!--                </block>-->
+                <block class="Iovista\ProductComment\Block\Product\View\ListView" name="product.info.product_additional_data.wrapper" template="Iovista_ProductComment::product/view/list.phtml" ifconfig="catalog/productComment/active">
+                    <arguments>
+                        <argument name="hide_title" xsi:type="boolean">true</argument>
+                    </arguments>
+                    <block class="Magento\Theme\Block\Html\Pager" name="product_comment_list.toolbar" ifconfig="catalog/productComment/active">
+                        <arguments>
+                            <argument name="show_per_page" xsi:type="boolean">false</argument>
+                            <argument name="show_amounts" xsi:type="boolean">false</argument>
+                        </arguments>
+                    </block>
+                </block>
             </block>
         </referenceContainer>
     </body>

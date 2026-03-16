@@ -8,7 +8,7 @@ namespace Iovista\ProductComment\Controller\Adminhtml\Comments;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 
 /**
- * Delete CMS page action.
+ * Delete Comment page action.
  */
 class Delete extends \Magento\Backend\App\Action implements HttpPostActionInterface
 {
@@ -32,24 +32,20 @@ class Delete extends \Magento\Backend\App\Action implements HttpPostActionInterf
         $resultRedirect = $this->resultRedirectFactory->create();
 
         if ($id) {
-            $title = "";
             try {
                 // init model and delete
                 $model = $this->_objectManager->create(\Iovista\ProductComment\Model\ProductComment::class);
                 $model->load($id);
-
-                $title = $model->getTitle();
                 $model->delete();
 
                 // display success message
                 $this->messageManager->addSuccessMessage(__('The comment has been deleted.'));
-
                 return $resultRedirect->setPath('*/*/');
             } catch (\Exception $e) {
                 // display error message
                 $this->messageManager->addErrorMessage($e->getMessage());
                 // go back to edit form
-                return $resultRedirect->setPath('*/*/edit', ['comment_id' => $id]);
+                return $resultRedirect->setPath('*/*/');
             }
         }
 

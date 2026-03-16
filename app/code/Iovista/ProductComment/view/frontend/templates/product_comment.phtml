@@ -8,14 +8,3 @@
 ?>
 <div id="product-comment-container" data-role="product-comment"></div>
 <?= $block->getChildHtml() ?>
-
-<script type="text/x-magento-init">
-    {
-        "*": {
-            "Iovista_ProductComment/js/process-reviews": {
-                "productCommentUrl": "<?= $block->escapeJs($block->getProductReviewUrl()) ?>",
-                "commentsTabSelector": "#tab-label-productComments"
-            }
-        }
-    }
-</script>

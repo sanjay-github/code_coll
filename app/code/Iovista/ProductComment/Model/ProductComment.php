@@ -6,12 +6,6 @@
 
 namespace Iovista\ProductComment\Model;
 
-use Magento\Framework\DataObject;
-use Magento\Catalog\Model\Product;
-use Magento\Framework\DataObject\IdentityInterface;
-use Magento\Framework\Validator\NotEmpty;
-use Magento\Framework\Validator\ValidateException;
-use Magento\Framework\Validator\ValidatorChain;
 //use Iovista\ProductComment\Model\ResourceModel\Review\Product\Collection as ProductCollection;
 //use Iovista\ProductComment\Model\ResourceModel\Review\Status\Collection as StatusCollection;
 

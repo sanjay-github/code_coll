@@ -17,7 +17,6 @@ if (!$block->getButtonLockManager()) {
 <div class="block review-add">
     <div class="block-title"><strong><?= $escaper->escapeHtml(__('Write Your Own Comment')) ?></strong></div>
 <div class="block-content">
-<?php if ($block->getAllowWriteReviewFlag()):?>
 <form action="<?= $escaper->escapeUrl($block->getAction()) ?>" class="product-comment-form" method="post" id="product-comment-form" data-role="product-product-comment-form" data-bind="scope: 'product-comment-form'">
     <?= $block->getBlockHtml('formkey') ?>
     <fieldset class="fieldset review-fieldset" data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>">
@@ -44,7 +43,7 @@ if (!$block->getButtonLockManager()) {
     <div class="actions-toolbar review-form-actions">
         <div class="primary actions-primary">
             <button type="submit" class="action submit primary"
-                <?php if ($block->getButtonLockManager()->isDisabled('review_form_submit')): ?>
+                <?php if ($block->getButtonLockManager()->isDisabled('comment_form')): ?>
                     disabled="disabled"
                 <?php endif; ?>>
                 <span><?= $escaper->escapeHtml(__('Submit Comment')) ?></span>
@@ -52,22 +51,5 @@ if (!$block->getButtonLockManager()) {
         </div>
     </div>
 </form>
-<script type="text/x-magento-init">
-{
-    "[data-role=product-review-form]": {
-        "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
-    },
-    "#product-comment-form": {
-        "Magento_Review/js/submit-review": {}
-    }
-}
-</script>
-<?php else: ?>
-    <div class="message info notlogged" id="review-form">
-        <div>
-            <?= $escaper->escapeHtml(__('Only registered users can write reviews. Please <a href="%1">Sign in</a> or <a href="%2">create an account</a>', $block->getLoginLink(), $block->getRegisterUrl()), ['a']) ?>
-        </div>
-    </div>
-<?php endif ?>
 </div>
 </div>
