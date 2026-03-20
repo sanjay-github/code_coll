@@ -21,6 +21,14 @@
                         <field id="active">1</field>
                     </depends>
                 </field>
+                <field id="cleanup_days" translate="label comment" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Cleanup Disapproved Comments After (Days)</label>
+                    <comment>Used by product:comment:cleanup command. Default is 10.</comment>
+                    <validate>required-entry validate-digits validate-greater-than-zero</validate>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
             </group>
         </section>
     </system>
